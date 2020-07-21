@@ -2,7 +2,7 @@ class Solution {
     public boolean judgeSquareSum(int c) {
         int i = 0;
         int j = (int)Math.sqrt(c);
-        while(i <= j){
+        while(i <= j){//可以相等
             int sum = i*i + j*j;
             if(sum > c){
                 j--;
