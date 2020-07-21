@@ -1,8 +1,9 @@
 class Solution {
     public boolean judgeSquareSum(int c) {
-        for(long i = 0; i*i <=c; i++){ // 不能用int
+        int q = (int)Math.sqrt(c);
+        for(int i = 0; i <=q; i++){
             double j = Math.sqrt(c- i*i);
-            if(j == (long)j){
+            if(j == (int)j){
                 return true;
             }
         }
