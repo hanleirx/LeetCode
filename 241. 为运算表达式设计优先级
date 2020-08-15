@@ -1,0 +1,31 @@
+class Solution {
+    public List<Integer> diffWaysToCompute(String input) {
+        List<Integer> ways = new ArrayList<Integer>();
+        for(int z = 0; z<input.length(); z++){
+            char c = input.charAt(z);
+            if(c == '*' || c =='+' || c == '-'){
+                List<Integer> left = diffWaysToCompute(input.substring(0,z));
+                List<Integer> right  = diffWaysToCompute(input.substring(z+1));
+                for(Integer i : left){
+                    for(Integer j : right){
+                        switch(c){
+                            case '+':
+                                ways.add(i +j);
+                                break;
+                            case '*':
+                                ways.add(i*j);
+                                break;
+                            case '-':
+                                ways.add(i - j);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        if(ways.size() ==0){
+            ways.add(Integer.valueOf(input));
+        }
+        return ways;
+    }
+}
