@@ -1,0 +1,54 @@
+class Solution {
+    public int numSquares(int n) {
+        Queue<Integer>  queue = new LinkedList<>();
+        boolean[] markedArr = new boolean[n+1];
+        markedArr[n] = true;
+        queue.add(n);
+        int level = 0;
+        while(!queue.isEmpty()){
+            level++;
+            int size = queue.size();
+            for(int i = 0; i < size; i++){
+                int value = queue.poll();
+                for(int j = 1; j * j <= value; j++){
+                    int next = value - j * j;
+                    if(next == 0){
+                        return level;
+                    }
+                    if(!markedArr[next]){
+                        queue.offer(next);
+                        markedArr[next] = true;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+}
+
+// class Solution {
+//     public int numSquares(int n) {
+//         Queue<Integer>  queue = new LinkedList<>();
+//         HashSet<Integer> visitedSet = new HashSet<>();
+//         queue.add(n);
+//         int level = 0;
+//         while(!queue.isEmpty()){
+//             level++;
+//             int size = queue.size();
+//             for(int i = 0; i < size; i++){
+//                 int value = queue.poll();
+//                 for(int j = 1; j * j <= value; j++){
+//                     int next = value - j * j;
+//                     if(next == 0){
+//                         return level;
+//                     }
+//                     if(!visitedSet.contains(next)){
+//                         queue.offer(next);
+//                         visitedSet.add(next);
+//                     }
+//                 }
+//             }
+//         }
+//         return -1;
+//     }
+// }
