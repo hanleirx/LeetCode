@@ -1,0 +1,45 @@
+class Solution {
+    public List<List<Integer>> pacificAtlantic(int[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0){
+            return new ArrayList<>();
+        }
+        int row = matrix.length;
+        int col = matrix[0].length; 
+        
+        int[][] pacific = new int[row][col];
+        int[][] atlantic = new int[row][col];
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                if(i == 0 || j == 0 ){
+                    dfs(matrix, pacific, i, j, matrix[i][j]);
+                }
+
+                if(i == row -1 || j == col -1){
+                    dfs(matrix, atlantic, i, j, matrix[i][j]);
+                }
+            }
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                if(pacific[i][j] == 1 && atlantic[i][j] == 1){
+                    res.add(Arrays.asList(i,j));
+                }
+            }
+        }
+        return res;
+    }
+
+    private void dfs(int[][] matrix, int[][] rec, int i, int j, int pre ){
+        if(i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || matrix[i][j] < pre || rec[i][j] == 1){
+            return;
+        }
+        rec[i][j] = 1;
+        dfs(matrix, rec, i + 1, j, matrix[i][j]);
+        dfs(matrix, rec, i - 1, j, matrix[i][j]);
+        dfs(matrix, rec, i, j + 1, matrix[i][j]);
+        dfs(matrix, rec, i, j - 1, matrix[i][j]);
+    }
+}
