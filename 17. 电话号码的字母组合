@@ -1,0 +1,26 @@
+class Solution {
+    private final static String[] KEYS ={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        if(digits == null || digits.length() == 0){
+            return res;
+        }
+        doCombination(new StringBuffer(), res, digits);
+        return res;
+    }
+
+    private void doCombination(StringBuffer pre, List<String> res, final String digits){
+        if(pre.length() == digits.length()){
+            res.add(pre.toString());
+            return;
+        }
+
+        int curPosition = digits.charAt(pre.length()) - '0';
+        String letters = KEYS[curPosition];
+        for(char c : letters.toCharArray()){
+            pre.append(c);
+            doCombination(pre, res, digits);
+            pre.deleteCharAt(pre.length() - 1);
+        }
+    }
+}
