@@ -1,0 +1,27 @@
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i <= nums.length; i++){
+            backtracing(res, list, nums, new boolean[nums.length], 0, i);
+        }
+        return res;
+    }
+
+    private void backtracing(List<List<Integer>> res, List<Integer> list, int[] nums, boolean[] visited, int start, int size){
+        if(size == list.size()){
+            res.add(new ArrayList<>(list));
+        }
+        for(int i = start; i < nums.length; i++){
+            if(i != 0 && nums[i] == nums[i - 1] && !visited[i - 1]){
+                continue;
+            }
+            list.add(nums[i]);
+            visited[i] = true;
+            backtracing(res, list, nums, visited, i + 1, size);
+            visited[i] = false;
+            list.remove(list.size() - 1);
+        }
+    }
+}
