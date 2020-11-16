@@ -1,0 +1,50 @@
+class Solution {
+    private boolean[][] rowUsed = new boolean[9][10];
+    private boolean[][] colUsed = new boolean[9][10];
+    private boolean[][] cubeUsed = new boolean[9][10];
+    private char[][] board;
+    public void solveSudoku(char[][] board) {
+        this.board = board;
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if(board[i][j] == '.'){
+                    continue;
+                }
+                int num = board[i][j] -'0';
+                rowUsed[i][num] = true;
+                colUsed[j][num] = true;
+                cubeUsed[cubeNum(i,j)][num] = true;
+            }
+        }
+        backtracing(0,0);
+    }
+
+    private boolean backtracing(int i,int j){
+        while(i < 9 && board[i][j] != '.'){
+            i = j == 8 ? i + 1 : i;
+            j = j == 8 ? 0 : j + 1;
+        }
+        if(i == 9){
+            return true;
+        }
+        for(int num = 1; num <= 9; num++){
+            if(cubeUsed[cubeNum(i,j)][num] || colUsed[j][num] || rowUsed[i][num]){
+                continue;
+            }
+            rowUsed[i][num] = colUsed[j][num] = cubeUsed[cubeNum(i,j)][num] = true;
+            board[i][j] = (char)(num + '0');
+            if(backtracing(i,j)){
+                return true;
+            }
+            rowUsed[i][num] = colUsed[j][num] = cubeUsed[cubeNum(i,j)][num] = false;
+            board[i][j] = '.';
+        }
+        return false;
+    }
+
+    private int cubeNum(int i, int j){
+        int a = i / 3;
+        int b = j / 3;
+        return a * 3 + b;
+    }
+}
